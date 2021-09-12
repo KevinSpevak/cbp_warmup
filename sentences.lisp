@@ -12,6 +12,12 @@
       (read-from-string (subseq (symbol-name literal) 1))
       literal))
 
+;;; Returns the negated literal (cancelling doulbe negation)
+(defun negate (literal)
+  (if (is-neg literal)
+      (lit-prop literal)
+      (read-from-string (format NIL "~s~s" '~ literal))))
+
 ;;; Returns t if the literal is true in the model
 ;;; See models.lisp
 (defun true-lit (literal model)
@@ -26,6 +32,14 @@
     (loop for clause in sent
 	  do (loop for lit in clause
 		   do (setq symbols (adjoin (lit-prop lit) symbols))))
+    symbols))
+
+;;; Returns a list of proposition symbols in a sentence
+(defun sentence-literals (sent)
+  (let ((symbols NIL))
+    (loop for clause in sent
+	  do (loop for lit in clause
+		   do (setq symbols (adjoin lit symbols))))
     symbols))
 
 ;;; Returns t if the model satisfies the cnf sentence
