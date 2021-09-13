@@ -68,14 +68,14 @@
 (time (dpll-sat rand-cnf-3))
 
 (print "---Results for horn-sat ---")
-(setq sent '((P Q) (~P)))
+(setq sent '((P ~Q) (~P)))
 (print "sentence: ")
 (print sent)
 (print "result:")
 (print-result (horn-sat sent))
 (print "")
 
-(setq sent '((P Q) (~P) (~Q)))
+(setq sent '((P ~Q) (~P) (Q)))
 (print "sentence: ")
 (print sent)
 (print "result:")

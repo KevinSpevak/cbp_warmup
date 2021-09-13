@@ -56,14 +56,16 @@
 
 
 ;;; Implementation of SAT for horn clauses through unit propagation/forward chaining
-;;  returns a satisfying model if one exists
+;;; returns a satisfying model if one exists
 ;;;   sentence: a conjunction of horn clauses
 (defun horn-sat (sentence)
-  (let ((model (make-hash-table)))
-    (setq sentence (unit-propagate sentence model))
-    (if (some #'not sentence)
-	NIL ; Empty clause -> unsatisfiable
-	(progn
-	  (loop for lit in (sentence-literals sentence)
-		do (set-prop model (lit-prop lit) NIL))
-	  model))))
+  (if (is-horn-cnf sentence)
+      (let ((model (make-hash-table)))
+	(setq sentence (unit-propagate sentence model))
+	(if (some #'not sentence)
+	    NIL ; Empty clause -> unsatisfiable
+	    (progn
+	      (loop for lit in (sentence-literals sentence)
+		    do (set-prop model (lit-prop lit) NIL))
+	      model)))
+      (print "sentence must contain only horn clauses")))

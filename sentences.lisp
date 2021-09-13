@@ -96,6 +96,7 @@
 	cnf)))
 
 ;;; Returns a random horn clause with up to k literals from a pool of n symbols
+;;; horn clause will be definite clause or goal clause with equal probability
 (defun rand-horn-clause (k n)
   (if (> k n)
       (print "n must be greater than k")
